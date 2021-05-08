@@ -5,7 +5,6 @@
 package it.polito.tdp.spellchecker;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.spellchecker.model.Model;
@@ -66,37 +65,36 @@ public class FXMLController {
     	txtErroriPresenti.clear();
     	
     	model.getListaP().clear();
+    	model.getListaPSbagliate().clear();
+    	model.setCont(0);
 
     }
 
     @FXML
     void doSpellCheck(ActionEvent event) {
     	
-       
-     
     	
     	if(txtParolaInserita.getText().isEmpty()) {
     		txtParolaInserita.setText("Inserisci una parola"); 
-    		
+    		 
     		return;
     	}
     	
     	if(cbLanguage.getValue()==null) {
     		txtParolaInserita.setText("Inserisci una lingua");
-    	
     		return;
     	}
-    		
     	
-    	model.dizionario(cbLanguage.getValue());
-    	
-    	int numErr = model.paroleErrate(txtParolaInserita.getText());
+       
+         
+    	model.paroleErrate(txtParolaInserita.getText(), cbLanguage.getValue());
+    	int numErr=model.getCont();
     	txtErroriPresenti.setText("The text contains "+numErr+" errors");
     	
+    	txtParoleSbagliate.setText(model.ListaParoleSbagliate());
     	
-         txtParoleSbagliate.setText("");
-         txtParolaInserita.setText("");
-//       txtErroriPresenti.setText("");
+        
+        
     	
         
     }
